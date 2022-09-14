@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: gulimall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.211.55.7:5555 #配置Nacos地址
+      config:
+        server-addr: 10.211.55.7:5555
+        enabled: false

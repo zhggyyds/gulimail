@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.211.55.7:3306/gulimall-pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+
+# MapperScan
+# sql映射文件位置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml # 搭配@MapperScan()使用，告知mybatisplus xml文件在哪
+  global-config:
+    db-config:
+      id-type: auto  # 将主键设置为自增
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+server:
+  port: 10000
+
+# 在控制台打印sql语句
+logging:
+  level:
+    com.hao.gulimall: debug
+
