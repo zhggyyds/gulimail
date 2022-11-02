@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
         - id: product_route
-          uri: lb://gulimall-product # 路由给product
+          uri: lb://gulimall-product # 负载均衡地路由给product
           predicates: # 什么情况下路由给它
             - Path=/api/product/**
           filters:
@@ -37,6 +37,15 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 
+        - id: gulimall_host_route
+          uri: lb://gulimall-product
+          predicates:
+            - Host= gulimall.com
+
+        - id: gulimall_search_route
+          uri: lb://gulimall-search
+          predicates:
+            - Host= search.gulimall.com
 
 
 

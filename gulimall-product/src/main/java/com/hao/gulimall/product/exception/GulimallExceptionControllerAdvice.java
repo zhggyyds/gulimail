@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * @author zhouhao
  * @PackageName:com.hao.gulimall.product.exception
- * @Description: 统一处理controller层异常,返回自定义的更容易前端阅读的code码和提示
+ * @Description: 统一处理数据校验产生的问题，解耦在controller中异常处理代码和业务代码,并返回自定义的更容易前端阅读的code码和提示
  * @date 2022/8/23 13:18
  **/
 
@@ -36,7 +36,7 @@ public class GulimallExceptionControllerAdvice {
 
         log.error("数据校验出现问题 - {},异常类型 - w{}",exception.getMessage(),exception.getClass());
 
-        return R.error(BizCodeEnume.VAILD_EXCEPTION.getCode(), BizCodeEnume.VAILD_EXCEPTION.getMsg()).put("data",map);
+        return R.error(BizCodeEnume.VALID_EXCEPTION.getCode(), BizCodeEnume.VALID_EXCEPTION.getMsg()).put("data",map);
     }
 
     @ExceptionHandler(value = Throwable.class)

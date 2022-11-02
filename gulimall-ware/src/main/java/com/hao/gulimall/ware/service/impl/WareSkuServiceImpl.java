@@ -1,5 +1,6 @@
 package com.hao.gulimall.ware.service.impl;
 
+import com.hao.common.to.SkuHasStockVo;
 import com.hao.common.utils.R;
 import com.hao.gulimall.ware.feign.ProductFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -57,6 +60,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             try {
                 // 获得商品名字
                 R info = productFeignService.info(skuId);
+                //数据通过json传输。对象经过传输以后，会从json对象自动转换为map对象。需要对传输通用对象json转换和逆转换，才能直接获得对象
                 Map<String,Object> data = (Map<String, Object>) info.get("skuInfo");
                 if(info.getCode() == 0){
                     skuEntity.setSkuName((String) data.get("skuName"));
@@ -69,6 +73,20 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             // 当数据库中已经存在商品
             wareSkuDao.addStock(skuId,wareId,skuNum);
         }
+    }
+
+    @Override
+    public List<SkuHasStockVo> getSkuHasStocks(List<Long> skuIds) {
+
+        List<SkuHasStockVo> collect = skuIds.stream().map(skuId -> {
+            SkuHasStockVo vo = new SkuHasStockVo();
+            vo.setSkuId(skuId);
+            Long hasStock = this.baseMapper.getSkuHasStocks(skuId);
+            vo.setHasStock(hasStock != null && hasStock > 0);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return collect;
     }
 
 }

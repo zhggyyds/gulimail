@@ -3,6 +3,7 @@ package com.hao.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hao.common.utils.PageUtils;
 import com.hao.gulimall.product.entity.CategoryEntity;
+import com.hao.gulimall.product.vo.Catelog2Vo;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +26,9 @@ public interface CategoryService extends IService<CategoryEntity> {
     Long[] findCateLogPath(Long catelogId);
 
     void updateCascadeById(CategoryEntity category);
+
+    List<CategoryEntity> getLevel1Categorys();
+
+    Map<String, List<Catelog2Vo>> getCatelogJson() throws InterruptedException;
 }
 

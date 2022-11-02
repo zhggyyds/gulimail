@@ -61,8 +61,14 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return new PageUtils(page);
     }
 
+
     @Transactional
     @Override
+    /*
+     * @description 保存属性
+     * @date 2022/10/9 13:15
+     * @param attr
+     */
     public void saveAttr(AttrVo attr) {
         AttrEntity attrEntity = new AttrEntity();
         BeanUtils.copyProperties(attr, attrEntity);
@@ -241,6 +247,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         PageUtils pageUtils = new PageUtils(page);
 
         return pageUtils;
+    }
+
+    // 返回可供搜索的属性id
+    @Override
+    public List<Long> selectSearchAttrIds(List<Long> attrIds) {
+        return this.baseMapper.getSearchAttrIds(attrIds);
     }
 
 

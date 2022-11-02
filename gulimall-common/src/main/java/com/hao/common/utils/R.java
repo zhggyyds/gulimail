@@ -8,9 +8,13 @@
 
 package com.hao.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.hao.common.to.SkuHasStockVo;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,7 +24,25 @@ import java.util.Map;
  */
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
-	
+
+	public R setData(Object data) {
+		put("data",data);
+		return this;
+	}
+
+	/**
+	 * 解析数据，直接将被转换map的对象转换为对应的实体类
+	 *
+	 * 1.@ResponseBody返回类型被封装成了Json格式
+	 * 2.feign接收参数时也会封装成json格式，data对象也被解析成json格式的数据（[集合对象]或{map对象}）
+	 * 3.将data转成json字符串格式，然后再解析成对象
+	 */
+	public <T> T getData(String key,TypeReference<T> type) {
+		Object data = get(key);
+		String jsonString = JSONObject.toJSONString(data);
+		return JSONObject.parseObject(jsonString, type);
+	}
+
 	public R() {
 		put("code", 0);
 		put("msg", "success");

@@ -6,6 +6,21 @@ spring:
     password: 123456
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+    #    suffix: .html  这些属性都是springboot默认配置
+    #    prefix: classpath:/templates/
+  redis:
+    host: 10.211.55.7
+    port: 6379
+  cache:
+    type: redis
+    redis:
+      time-to-live: 360000 # 指定缓存的存活时间
+      #key-prefix: GULIMALL_ # 自定义前缀名，默认使用缓存名称
+      #use-key-prefix: false # 不使用前缀，默认使用前缀 true
+      cache-null-values: true
+
 
 
 # MapperScan
@@ -24,5 +39,7 @@ server:
 # 在控制台打印sql语句
 logging:
   level:
-    com.hao.gulimall: debug
+    com.hao.gulimall: error
+
+
 
