@@ -1,7 +1,6 @@
 package com.hao.gulimall.search.controller;
 
 import com.hao.common.exception.BizCodeEnume;
-import com.hao.common.to.SkuHasStockVo;
 import com.hao.common.to.es.SkuEsModel;
 import com.hao.common.utils.R;
 import com.hao.gulimall.search.service.ProductSaveService;

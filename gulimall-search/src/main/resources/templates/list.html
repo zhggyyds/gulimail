@@ -64,14 +64,16 @@
         </b>
         <ul>
             <li>
-                <a href="/static/search/#" class="li_2">你好，请登录</a>
+                <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com" class="li_2">你好，请登录</a>
+                <a th:if="${session.loginUser != null}">欢迎, [[${session.loginUser.nickname}]]</a>
+
             </li>
             <li>
-                <a href="/static/search/#">免费注册</a>
+                <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/reg.html" style="color: red;">免费注册</a>
             </li>
             <span>|</span>
             <li>
-                <a href="/static/search/#">我的订单</a>
+                <a href="http://order.gulimall.com/list.html">我的订单</a>
             </li>
             <span>|</span>
             <li class="header_wdjd" style="width:80px;">
@@ -1192,7 +1194,7 @@
                                 <a href="/static/search/#">关注</a>
                             </div>
                             <p class="da">
-                                <a href="/static/search/#" >
+                                <a th:href="|http://item.gulimall.com/${product.skuId}.html|" >
                                     <!--  显示商品图片   -->
                                     <img th:src="${product.skuImg}" class="dim">
                                 </a>
@@ -1208,7 +1210,7 @@
                             </p>
                             <p class="tab_JE">
                                 <!--  显示商品标题   -->
-                                <a href="/static/search/#" th:utext="${product.skuTitle}">
+                                <a th:href="|http://item.gulimall.com/${product.skuId}.html|" th:utext="${product.skuTitle}">
                                     Apple iPhone 7 Plus (A1661) 32G 黑色 移动联通电信4G手机
                                 </a>
                             </p>

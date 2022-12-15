@@ -1,15 +1,12 @@
 package com.hao.gulimall.ware.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hao.gulimall.ware.entity.SeckillSessionEntity;
 import com.hao.gulimall.ware.service.SeckillSessionService;
@@ -26,10 +23,23 @@ import com.hao.common.utils.R;
  * @date 2022-08-07 12:38:46
  */
 @RestController
-@RequestMapping("ware/seckillsession")
+@RequestMapping("coupon/seckillsession")
 public class SeckillSessionController {
+
     @Autowired
     private SeckillSessionService seckillSessionService;
+
+    /*
+     * @description 获得近三天的秒杀活动信息
+     * @date 2022/12/11 16:34
+     * @param null
+     * @return null
+     */
+    @GetMapping(value = "/Latest3DaySession")
+    public R getLates3DaySession(){
+        List<SeckillSessionEntity> list = seckillSessionService.getLates3DaySession();
+        return R.ok().setData(list);
+    }
 
     /**
      * 列表

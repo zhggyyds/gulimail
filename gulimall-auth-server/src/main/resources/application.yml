@@ -1,0 +1,37 @@
+spring:
+  zipkin:
+    # zipkin服务器的地址
+    base-url: http://10.211.55.7:9411
+    # 关闭服务发现，否则Springcloud会把zipkin当做服务名称
+    discovery-client-enabled: false
+    # 数据传输方式
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  thymeleaf:
+    cache: false
+  redis:
+    port: 6379
+    host: 10.211.55.7
+  session:
+    store-type: redis
+  cloud:
+    sentinel:
+      transport:
+        # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
+        port: 8719
+        # 控制台ip:port
+        dashboard: 127.0.0.1:8080
+
+# 开启feign熔断，开启后能够监控到远程调用资源
+feign:
+  sentinel:
+    enabled: true
+# 审计模块暴露，应用健康情况（配合sentinel dashboard）
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'

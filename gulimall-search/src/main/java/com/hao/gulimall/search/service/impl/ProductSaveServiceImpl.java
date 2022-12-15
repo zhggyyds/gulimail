@@ -1,8 +1,7 @@
 package com.hao.gulimall.search.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hao.common.constant.EsConstant;
+import com.hao.common.constant.es.EsConstant;
 import com.hao.common.to.es.SkuEsModel;
 import com.hao.gulimall.search.config.GuliEsSearchConfig;
 import com.hao.gulimall.search.service.ProductSaveService;

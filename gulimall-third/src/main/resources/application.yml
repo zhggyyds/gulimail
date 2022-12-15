@@ -6,3 +6,8 @@ spring:
       oss:
         endpoint: oss-cn-hangzhou.aliyuncs.com
         bucket: zh-gulimall
+      sms:
+        host: https://gyytz.market.alicloudapi.com
+        path: /sms/smsSend
+        method: POST
+        appcode: 3df54007448f48c4ba643ca40a0f93ae

@@ -1,0 +1,56 @@
+server:
+  port: 25000
+spring:
+  zipkin:
+    # zipkin服务器的地址
+    base-url: http://10.211.55.7:9411
+    # 关闭服务发现，否则Springcloud会把zipkin当做服务名称
+    discovery-client-enabled: false
+    # 数据传输方式
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
+    #    suffix: .html  这些属性都是springboot默认配置
+    #    prefix: classpath:/templates/
+  redis:
+    host: 10.211.55.7
+    port: 6379
+  session:
+    store-type: redis
+  rabbitmq:
+    host: 10.211.55.7
+    port: 5672
+    virtual-host: /
+    # 消费者手动确认模式，关闭自动确认，否则会消息丢失
+    listener:
+      simple:
+        acknowledge-mode: manual
+  cloud:
+    sentinel:
+      transport:
+        # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
+        port: 8719
+        # 控制台ip:port
+        dashboard: 127.0.0.1:8080
+
+# 开启feign熔断，开启后能够监控到远程调用资源
+feign:
+  sentinel:
+    enabled: true
+# 审计模块暴露，应用健康情况（配合sentinel dashboard）
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'
+
+
+
+
+

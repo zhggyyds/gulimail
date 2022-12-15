@@ -1,4 +1,22 @@
 spring:
+  zipkin:
+    # zipkin服务器的地址
+    base-url: http://10.211.55.7:9411
+    # 关闭服务发现，否则Springcloud会把zipkin当做服务名称
+    discovery-client-enabled: false
+    # 数据传输方式
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  cloud:
+    sentinel:
+      transport:
+        # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
+        port: 8719
+        # 控制台ip:port
+        dashboard: 127.0.0.1:8080
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.211.55.7:3306/gulimall-pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
@@ -13,13 +31,15 @@ spring:
   redis:
     host: 10.211.55.7
     port: 6379
+  session:
+    store-type: redis
   cache:
     type: redis
     redis:
       time-to-live: 360000 # 指定缓存的存活时间
       #key-prefix: GULIMALL_ # 自定义前缀名，默认使用缓存名称
       #use-key-prefix: false # 不使用前缀，默认使用前缀 true
-      cache-null-values: true
+      cache-null-values: true # 开启空值缓存，查询为空值仍然会放入缓存，防止缓存穿透
 
 
 
@@ -40,6 +60,20 @@ server:
 logging:
   level:
     com.hao.gulimall: error
+gulimall:
+  thread:
+    core-size: 20
+    max-size: 200
+    keep-alive-time: 10
 
 
-
+# 开启feign熔断，开启后能够监控到远程调用资源
+feign:
+  sentinel:
+    enabled: true
+# 审计模块暴露，应用健康情况（配合sentinel dashboard）
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: '*'

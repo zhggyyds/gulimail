@@ -1,4 +1,15 @@
 spring:
+  zipkin:
+    # zipkin服务器的地址
+    base-url: http://10.211.55.7:9411
+    # 关闭服务发现，否则Springcloud会把zipkin当做服务名称
+    discovery-client-enabled: false
+    # 数据传输方式
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.211.55.7:3306/gulimall-wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
@@ -6,6 +17,25 @@ spring:
     password: 123456
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  cloud:
+    sentinel:
+      transport:
+        # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
+        port: 8719
+        # 控制台ip:port
+        dashboard: 127.0.0.1:8080
+  rabbitmq:
+    host: 10.211.55.7
+    port: 5672
+    virtual-host: /
+    publisher-confirm-type: correlated # 开启发送端抵达交换机确认，无论是否到达broker都会触发回调【发送端确认机制+本地事务表】
+    publisher-returns: true # 开启发送端抵达队列确认，消息未被队列接收时触发回调【发送端确认机制+本地事务表】
+    template:
+      mandatory: true # 开启发布确认
+    # 消费者手动确认模式，关闭自动确认，否则会消息丢失
+    listener:
+      simple:
+        acknowledge-mode: manual
 
 # MapperScan
 # sql映射文件位置
@@ -19,3 +49,15 @@ mybatis-plus:
 logging:
   level:
     com.hao.gulimall: debug
+
+## 开启feign熔断，开启后能够监控到远程调用资源
+feign:
+  sentinel:
+    enabled: true
+# 审计模块暴露，应用健康情况（配合sentinel dashboard）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+

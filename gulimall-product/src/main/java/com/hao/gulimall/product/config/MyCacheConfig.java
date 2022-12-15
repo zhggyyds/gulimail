@@ -21,6 +21,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 @Configuration
 public class MyCacheConfig {
+
+    //    @Autowired
+    //    CacheProperties cacheProperties;
+
     /**
      * 需要将配置文件中的配置设置上
      * 1、使配置类生效
@@ -39,6 +43,7 @@ public class MyCacheConfig {
         org.springframework.data.redis.cache.RedisCacheConfiguration config = org.springframework.data.redis.cache.RedisCacheConfiguration
                 .defaultCacheConfig();
         config = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));
+        // TODO 自定义缓存配置，value值使用json格式序列化
         config = config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
         // 当自己往IOC注入了RedisCacheConfiguration配置类时，以下参数全都失效，需要手动设置

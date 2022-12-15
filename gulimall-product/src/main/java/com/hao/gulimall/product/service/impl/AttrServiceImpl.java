@@ -1,9 +1,8 @@
 package com.hao.gulimall.product.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.hao.common.constant.ProductConstant;
+import com.hao.common.constant.product.ProductConstant;
 import com.hao.gulimall.product.dao.AttrAttrgroupRelationDao;
 import com.hao.gulimall.product.dao.AttrGroupDao;
 import com.hao.gulimall.product.dao.CategoryDao;
@@ -17,12 +16,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

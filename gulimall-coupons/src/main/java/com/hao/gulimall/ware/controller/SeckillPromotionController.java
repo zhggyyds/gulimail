@@ -26,7 +26,7 @@ import com.hao.common.utils.R;
  * @date 2022-08-07 12:38:46
  */
 @RestController
-@RequestMapping("ware/seckillpromotion")
+@RequestMapping("coupon/seckillpromotion")
 public class SeckillPromotionController {
     @Autowired
     private SeckillPromotionService seckillPromotionService;

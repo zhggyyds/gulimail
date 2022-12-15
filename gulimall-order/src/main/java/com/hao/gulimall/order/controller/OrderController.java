@@ -5,11 +5,7 @@ import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hao.gulimall.order.entity.OrderEntity;
 import com.hao.gulimall.order.service.OrderService;
@@ -31,6 +27,16 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
+    /**
+     * 通过OrderSn 获取订单详情
+     */
+    @GetMapping("/status/{orderSn}")
+    public R getOrderByOrderSn(@PathVariable("orderSn") String orderSn) {
+        OrderEntity order = orderService.getOrderByOrderSn(orderSn);
+        return R.ok().setData(order);
+    }
+
     /**
      * 列表
      */
@@ -39,6 +45,16 @@ public class OrderController {
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = orderService.queryPage(params);
 
+        return R.ok().put("page", page);
+    }
+
+    /**
+     * 查询某用户的订单列表和商品详情信息
+     */
+    @PostMapping("/listWithItems")
+//    @RequiresPermissions("order:order:list")
+    public R listWithItems(@RequestBody Map<String, Object> params){
+        PageUtils page = orderService.queryPageWithItems(params);
         return R.ok().put("page", page);
     }
 

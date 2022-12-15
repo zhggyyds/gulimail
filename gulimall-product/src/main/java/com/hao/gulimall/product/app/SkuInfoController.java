@@ -1,15 +1,13 @@
 package com.hao.gulimall.product.app;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hao.gulimall.product.entity.SkuInfoEntity;
 import com.hao.gulimall.product.service.SkuInfoService;
@@ -28,6 +26,7 @@ import com.hao.common.utils.R;
 @RestController
 @RequestMapping("product/skuinfo")
 public class SkuInfoController {
+
     @Autowired
     private SkuInfoService skuInfoService;
 
@@ -42,16 +41,30 @@ public class SkuInfoController {
         return R.ok().put("page", page);
     }
 
+    @GetMapping("/price/{skuId}")
+    BigDecimal getPrice(@PathVariable("skuId")Long skuId){
+        SkuInfoEntity skuInfoEntity = skuInfoService.getById(skuId);
+        return skuInfoEntity.getPrice();
+    }
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{skuId}")
+    @GetMapping("/info/{skuId}")
 //   @RequiresPermissions("product:skuinfo:info")
     public R info(@PathVariable("skuId") Long skuId){
 		SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
 
         return R.ok().put("skuInfo", skuInfo);
+    }
+
+    /**
+     * 查询商品集合
+     */
+    @PostMapping("/infos")
+    public R infos(@RequestBody List<Long> skuIds) {
+        List<SkuInfoEntity> skuInfos = skuInfoService.getByIds(skuIds);
+        return R.ok().setData(skuInfos);
     }
 
     /**

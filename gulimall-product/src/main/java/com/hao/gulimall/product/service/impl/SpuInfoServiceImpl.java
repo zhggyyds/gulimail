@@ -2,8 +2,8 @@ package com.hao.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.alibaba.fastjson.TypeReference;
-import com.hao.common.constant.ProductConstant;
-import com.hao.common.to.SkuHasStockVo;
+import com.hao.common.constant.product.ProductConstant;
+import com.hao.common.vo.ware.SkuHasStockVo;
 import com.hao.common.to.SkuReductionTo;
 import com.hao.common.to.SpuBoundTo;
 import com.hao.common.to.es.SkuEsModel;
@@ -310,6 +310,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }else {
             log.error("商品远程es保存失败");
         }
+    }
+
+    @Override
+    public SpuInfoEntity getSpuInfoBySkuId(Long skuId) {
+        SkuInfoEntity skuInfoEntity = skuInfoService.getById(skuId);
+        return this.getById(skuInfoEntity.getSpuId());
     }
 
 }

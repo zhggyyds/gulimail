@@ -10,3 +10,4 @@ spring:
         server-addr: 10.211.55.7:5555
       config:
         server-addr: 10.211.55.7:5555
+        enabled: false

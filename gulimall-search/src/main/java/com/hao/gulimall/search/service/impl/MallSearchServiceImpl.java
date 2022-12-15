@@ -2,7 +2,7 @@ package com.hao.gulimall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.hao.common.constant.EsConstant;
+import com.hao.common.constant.es.EsConstant;
 import com.hao.common.to.es.SkuEsModel;
 import com.hao.common.utils.R;
 import com.hao.gulimall.search.config.GuliEsSearchConfig;
@@ -14,7 +14,6 @@ import com.hao.gulimall.search.vo.SearchParam;
 import com.hao.gulimall.search.vo.SearchResult;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.lucene.search.join.ScoreMode;
-import org.apache.lucene.util.ArrayUtil;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -23,10 +22,8 @@ import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.ParsedAggregation;
 import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.nested.ParsedNested;
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
@@ -40,19 +37,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.hao.common.constant.EsConstant.PRODUCT_INDEX;
+import static com.hao.common.constant.es.EsConstant.PRODUCT_INDEX;
 
 /**
  * @author zhouhao

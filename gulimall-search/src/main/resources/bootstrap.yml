@@ -8,6 +8,11 @@ spring:
       config:
         server-addr: 10.211.55.7:5555
         enabled: false
+  redis:
+    host: 10.211.55.7
+    port: 6379
+  session:
+    store-type: redis
 
 
   thymeleaf:

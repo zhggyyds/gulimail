@@ -7,6 +7,7 @@ import com.hao.gulimall.product.entity.AttrEntity;
 import com.hao.gulimall.product.service.AttrService;
 import com.hao.gulimall.product.vo.AttrAttrGroupVo;
 import com.hao.gulimall.product.vo.AttrGroupWithAttrsVo;
+import com.hao.gulimall.product.vo.SpuItemAttrGroupVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,6 +103,14 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         }).collect(Collectors.toList());
 
         return collect;
+    }
+
+    @Override
+    public List<SpuItemAttrGroupVO> getAttrGroupWithAttrs(Long spuId, Long catalogId) {
+        // 1.通过spuId查询所有属性值（pms_product_attr_value）
+        // 2.通过attrId关联所有属性分组（pms_attr_attrgroup_relation）
+        // 3.通过attrGroupId + catalogId关联属性分组名称（pms_attr_group）
+        return baseMapper.getAttrGroupWithAttrs(spuId, catalogId);
     }
 
 }

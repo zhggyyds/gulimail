@@ -1,17 +1,30 @@
 spring:
   cloud:
+    sentinel:
+      transport:
+        # 应用开启端口，接收dashboard限流规则，如果被占用会默认+1
+        port: 8719
+        # 控制台ip:port
+        dashboard: 127.0.0.1:8080
     gateway:
       routes:
         - id: product_route
           uri: lb://gulimall-product # 负载均衡地路由给product
-          predicates: # 什么情况下路由给它
+          predicates:
             - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: coupon_route
+          uri: lb://gulimall-coupon # 负载均衡地路由给product
+          predicates:
+            - Path=/api/coupon/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
         - id: member_route
           uri: lb://gulimall-member
-          predicates: # 什么情况下路由给它
+          predicates:
             - Path=/api/member/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
@@ -40,15 +53,50 @@ spring:
         - id: gulimall_host_route
           uri: lb://gulimall-product
           predicates:
-            - Host= gulimall.com
+            - Host= gulimall.com,item.gulimall.com
 
         - id: gulimall_search_route
           uri: lb://gulimall-search
           predicates:
             - Host= search.gulimall.com
 
+        - id: gulimall_auth_route
+          uri: lb://gulimall-auth-server
+          predicates:
+            - Host= auth.gulimall.com
 
+        - id: gulimall_cart_route
+          uri: lb://gulimall-cart
+          predicates:
+            - Host= cart.gulimall.com
+
+        - id: gulimall_order_route
+          uri: lb://gulimall-order
+          predicates:
+            - Host= order.gulimall.com
+
+        - id: gulimall_member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Host= member.gulimall.com
+
+        - id: gulimall_seckill_route
+          uri: lb://gulimall-seckill
+          predicates:
+            - Host= seckill.gulimall.com
 
 server:
   port: 88
+
+# 开启feign熔断，开启后能够监控到远程调用资源
+feign:
+  sentinel:
+    enabled: true
+# 审计模块暴露，应用健康情况（配合sentinel dashboard）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 

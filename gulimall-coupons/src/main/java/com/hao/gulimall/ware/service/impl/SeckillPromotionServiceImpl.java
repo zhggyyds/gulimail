@@ -18,6 +18,7 @@ public class SeckillPromotionServiceImpl extends ServiceImpl<SeckillPromotionDao
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+
         IPage<SeckillPromotionEntity> page = this.page(
                 new Query<SeckillPromotionEntity>().getPage(params),
                 new QueryWrapper<SeckillPromotionEntity>()

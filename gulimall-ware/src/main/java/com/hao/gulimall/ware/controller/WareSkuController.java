@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
-import com.hao.common.to.SkuHasStockVo;
+import com.hao.common.exception.BizCodeEnume;
+import com.hao.common.exception.NoStockException;
+import com.hao.common.to.order.WareSkuLockTo;
+import com.hao.common.vo.ware.SkuHasStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,14 +32,24 @@ public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+    /**
+     * 锁定库存
+     */
+    @PostMapping(value = "/lock/order")
+    public R lockStock(@RequestBody WareSkuLockTo wareSkuLockTo){
+        try{
+            wareSkuService.lockStock(wareSkuLockTo);
+            return R.ok();
+        }catch (NoStockException e){
+            return R.error(BizCodeEnume.NO_STOCK_EXCEPTION.getCode(),BizCodeEnume.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
+
     // 库存查询
     @PostMapping("/hasStock")
     public  R getSkuHasStocks(@RequestBody List<Long> skuIds){
         List<SkuHasStockVo> list = wareSkuService.getSkuHasStocks(skuIds);
-
-        R r = R.ok();
-        r.setData(list);
-        return r;
+        return R.ok().setData(list);
 
     }
 

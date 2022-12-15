@@ -1,6 +1,6 @@
 package com.hao.gulimall.ware.service.impl;
 
-import com.hao.common.constant.WareConstant;
+import com.hao.common.constant.ware.WareConstant;
 import com.hao.gulimall.ware.Vo.MerageVo;
 import com.hao.gulimall.ware.Vo.PurchaseDoneVo;
 import com.hao.gulimall.ware.Vo.PurchaseItemDoneVo;
@@ -26,8 +26,6 @@ import com.hao.gulimall.ware.dao.PurchaseDao;
 import com.hao.gulimall.ware.entity.PurchaseEntity;
 import com.hao.gulimall.ware.service.PurchaseService;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.xml.ws.Action;
 
 
 @Service("purchaseService")

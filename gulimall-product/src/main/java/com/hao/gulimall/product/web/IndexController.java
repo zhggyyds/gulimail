@@ -32,13 +32,12 @@ public class IndexController {
         // 查询所有1级分类
         List<CategoryEntity> categoryEntitys = categoryService.getLevel1Categorys();
 
-        //
+        //请求转发配合model使用
         model.addAttribute("categorys", categoryEntitys);
-
 
         // 解析器自动拼装classpath:/templates/  + index +  .html =》 classpath:/templates/index.html
         // classpath表示类路径，编译前是resources文件夹，编译后resources文件夹内的文件会统一存放至classes文件夹内
-        return "index";
+        return "index";//请求转发
     }
 
     @ResponseBody

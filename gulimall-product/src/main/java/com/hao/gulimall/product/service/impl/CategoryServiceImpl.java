@@ -90,7 +90,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
 
     /*
-    * 缓存和数据库一致性
+    * TODO 缓存和数据库一致性
 
         双写模式：写数据库后，写缓存
         问题：并发时，2写进入，写完DB后都写缓存。有暂时的脏数据
@@ -110,6 +110,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         我们不应该过度设计，增加系统的复杂性。遇到实时性、一致性要求高的数据，就应该查数据库，即使慢点。
 
      */
+
     /*
     * 使用Caching注解中可以放置多个操作注解
     * */
@@ -117,6 +118,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //            @CacheEvict(value = {"category"},key = "'getLevel1Categorys'"),
 //            @CacheEvict(value = {"category"},key = "'getCatalogJsonWithSpringCache'")
 //    })
+
+    /*
+     * @description 更新目录
+     * @date 2022/10/24 15:22
+     * @param category
+     */
+
     /**
      * 级联更新所有关联表的冗余数据
      * 缓存策略：失效模式，方法执行完删除缓存
@@ -128,16 +136,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @CacheEvict(value = {"category"}, allEntries = true) // 失效模式 allEntries = true --- 删除缓存category下的所有cache
     @Transactional
     @Override
-    /*
-     * @description 更新目录
-     * @date 2022/10/24 15:22
-     * @param category
-     */
     public void updateCascadeById(CategoryEntity category) {
+        // todo 定时任务定期执行代码更新缓存
         this.updateById(category);
         categoryBrandRelationService.updateCateLog(category.getCatId(), category.getName());
 
     }
+
 
     // 自定义生成缓存的名称和存在redis中的key值，key值使用SpEL或字符串自定义（ 默认 value::key 就是redis中的key值 前缀：：key)
     //    SpEL的使用 https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-spel-context
@@ -151,9 +156,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
 
-    /*
-    *
-    *
+    /*TODO redis为什么不使用lettuce客户端
     * lettuce堆外内存溢出bug 当进行压力测试时后期后出现堆外内存溢出OutOfDirectMemoryError
     *
         产生原因：

@@ -20,6 +20,9 @@
         <module>gulimall-gateway</module>
         <module>gulimall-third</module>
         <module>gulimall-search</module>
+        <module>gulimall-auth-server</module>
+        <module>gulimall-cart</module>
+        <module>gulimall-seckill</module>
 
     </modules>
 
@@ -44,6 +47,15 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--spring cloud Hoxton.SR6-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-dependencies</artifactId>-->
+<!--                <version>Hoxton.SR1</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
@@ -51,9 +63,6 @@
             </dependency>
 
         </dependencies>
-
-
-
     </dependencyManagement>
 
 <!--  解决每次刷新mvn时，jdk依赖都变成1.5的问题  -->
@@ -66,16 +75,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-
-            <!--   热部署工具插件     -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                    <addResources>true</addResources>
                 </configuration>
             </plugin>
         </plugins>
